@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

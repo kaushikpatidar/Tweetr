@@ -1,6 +1,6 @@
 package com.tweetr.configuration;
 
-public class TwitterAccessConfiguration {
+public final class TwitterAccessConfiguration {
 
     private String consumerKey;
     private String consumerSecret;
