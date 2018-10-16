@@ -3,13 +3,13 @@ package com.tweetr.resource;
 import com.codahale.metrics.annotation.Timed;
 import com.tweetr.model.TwitterPost;
 import com.tweetr.model.TwitterUser;
-
-import twitter4j.*;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class ObtainTimelineResource {
     public Response getHomeTimeline() {
 
         try {
-            User user2 = twitter.verifyCredentials();
+
             List<Status> timelineStatusList = twitter.getHomeTimeline();
 
             List<TwitterPost> timelineTwitterPost = new ArrayList<>();
