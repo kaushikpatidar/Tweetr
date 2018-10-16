@@ -1,6 +1,8 @@
 package com.tweetr.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.tweetr.model.TwitterPost;
+import com.tweetr.model.TwitterUser;
 import twitter4j.*;
 
 import javax.ws.rs.GET;
@@ -27,13 +29,16 @@ public class ObtainTimelineResource {
     public Response getHomeTimeline() {
 
         try {
-            User user = twitter.verifyCredentials();
+            User user2 = twitter.verifyCredentials();
             List<Status> timelineStatusList = twitter.getHomeTimeline();
-            List<String> timelineStatusText = new ArrayList<>();
+
+            List<TwitterPost> timelineTwitterPost = new ArrayList<>();
             for (Status status: timelineStatusList) {
-                timelineStatusText.add(status.getText());
+                TwitterUser twitterUser = new TwitterUser(status.getUser().getProfileImageURL(), status.getUser().getScreenName(), status.getUser().getName());
+                TwitterPost twitterPost = new TwitterPost(status.getText(), twitterUser, status.getCreatedAt());
+                timelineTwitterPost.add(twitterPost);
             }
-            return Response.ok(timelineStatusText).build();
+            return Response.ok(timelineTwitterPost).build();
         } catch (TwitterException e) {
             System.out.println("Failed to obtain the user timeline: " + e.getMessage());
             e.printStackTrace();
