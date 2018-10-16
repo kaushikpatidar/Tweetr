@@ -3,6 +3,7 @@ package com.tweetr.resource;
 import com.codahale.metrics.annotation.Timed;
 import com.tweetr.model.TwitterPost;
 import com.tweetr.model.TwitterUser;
+
 import twitter4j.*;
 
 import javax.ws.rs.GET;
