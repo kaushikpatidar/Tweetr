@@ -1,8 +1,7 @@
 .idea/*
-/bin
 .classpath
 .project
 .settings
 *.iml
-/bin
+*.yml
 twitter4j.properties
