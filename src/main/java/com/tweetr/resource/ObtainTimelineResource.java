@@ -3,6 +3,8 @@ package com.tweetr.resource;
 import com.codahale.metrics.annotation.Timed;
 import com.tweetr.model.TwitterPost;
 import com.tweetr.model.TwitterUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ObtainTimelineResource {
 
     private Twitter twitter;
+    private Logger log = LoggerFactory.getLogger(ObtainTimelineResource.class);
 
     public ObtainTimelineResource(Twitter twitter) {
         this.twitter = twitter;
@@ -30,6 +33,8 @@ public class ObtainTimelineResource {
     public Response getHomeTimeline() {
 
         try {
+            log.info("Getting the timeline from twitter");
+            log.debug("User screen name: " + twitter.getScreenName());
 
             List<Status> timelineStatusList = twitter.getHomeTimeline();
 
@@ -39,13 +44,13 @@ public class ObtainTimelineResource {
                 TwitterPost twitterPost = new TwitterPost(status.getText(), twitterUser, status.getCreatedAt());
                 timelineTwitterPost.add(twitterPost);
             }
+
+            log.info("Successfully retrieved " + timelineTwitterPost.size() + " posts from timeline");
             return Response.ok(timelineTwitterPost).build();
         } catch (TwitterException e) {
-            System.out.println("Failed to obtain the user timeline: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Failed to obtain the user timeline: " + e.getMessage(), e);
         } catch (Exception e){
-            System.out.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Error: " + e.getMessage(), e);
         }
         return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }

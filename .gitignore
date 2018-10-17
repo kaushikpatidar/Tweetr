@@ -1,7 +1,26 @@
+### Application ###
+access-config.yml
+twitter4j.properties
+*.log
+
+### IntelliJ ###
 .idea/*
 .classpath
 .project
 .settings
 *.iml
-*.yml
-twitter4j.properties
+
+### Eclipse ###
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
