@@ -1,6 +1,6 @@
-package com.tweetr.configuration;
+package com.tweetr.model.accessparameters;
 
-public final class TwitterAccessConfiguration {
+public final class TwitterAccessParameters {
 
     private String consumerKey;
     private String consumerSecret;
