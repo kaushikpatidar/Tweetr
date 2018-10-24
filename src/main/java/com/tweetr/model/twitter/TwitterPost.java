@@ -1,4 +1,4 @@
-package com.tweetr.model;
+package com.tweetr.model.twitter;
 
 import java.util.Date;
 import java.util.Objects;

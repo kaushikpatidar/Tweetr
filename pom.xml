@@ -21,6 +21,60 @@
             <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <exclusions><!-- Important, remove these 1 dependency -->
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-expression</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
@@ -56,7 +110,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.tweetr.application.TweetrApp</mainClass>
+                                    <mainClass>com.tweetr.dropwizard.application.TweetrApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -93,6 +147,22 @@
         <snakeyaml.version>1.23</snakeyaml.version>
         <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
         <maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
+        <spring.version>5.1.1.RELEASE</spring.version>
     </properties>
+
+    <developers>
+        <developer>
+            <id>kaushik.patidar</id>
+            <name>Kaushik Popatlal Patidar</name>
+            <email>kaushik.patidar@lithium.com</email>
+            <organization>Lithium Technologies Inc.</organization>
+            <organizationUrl>https://www.lithium.com/</organizationUrl>
+            <roles>
+                <role>SDE2</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+5:30</timezone>
+        </developer>
+    </developers>
 
 </project>
