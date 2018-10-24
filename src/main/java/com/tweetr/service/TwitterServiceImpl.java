@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class TwitterServiceImpl implements TwitterService{
 
@@ -29,10 +31,10 @@ public class TwitterServiceImpl implements TwitterService{
         }
         try{
             status = twitterConfigurationBuilder.getTwitter().updateStatus(tweet);
-        }
-
-        catch (TwitterException e) {
+        } catch (TwitterException e) {
             log.error("Failed to publish the tweet: " + e.getMessage(), e);
+        } catch (Exception e){
+            log.error("Error: " + e.getMessage(), e);
         }
         return status;
     }
@@ -50,21 +52,22 @@ public class TwitterServiceImpl implements TwitterService{
                 return null;
             }
 
-            List<TwitterPost> timelineTwitterPost = new ArrayList<>();
+            List<TwitterPost> timelineTwitterPostList = new ArrayList<>();
 
             if(timelineStatusList.size()==0){
                 log.info("Didn't retrieve any  posts from timeline");
-                return timelineTwitterPost;
+                return timelineTwitterPostList;
             }
 
-            for (Status status: timelineStatusList) {
-                TwitterUser twitterUser = new TwitterUser(status.getUser().getProfileImageURL(), status.getUser().getScreenName(), status.getUser().getName());
-                TwitterPost twitterPost = new TwitterPost(status.getText(), twitterUser, status.getCreatedAt());
-                timelineTwitterPost.add(twitterPost);
-            }
+            timelineTwitterPostList = timelineStatusList.stream()
+                    .map(timelineTwitterPost -> new TwitterPost(timelineTwitterPost.getText(),
+                            new TwitterUser(timelineTwitterPost.getUser().getProfileImageURL(),
+                                    timelineTwitterPost.getUser().getScreenName(),
+                                    timelineTwitterPost.getUser().getName()), timelineTwitterPost.getCreatedAt()))
+                    .collect(toList());
 
-            log.info("Successfully retrieved " + timelineTwitterPost.size() + " posts from timeline");
-            return timelineTwitterPost;
+            log.info("Successfully retrieved " + timelineTwitterPostList.size() + " posts from timeline");
+            return timelineTwitterPostList;
         } catch (TwitterException e) {
             log.error("Failed to obtain the user timeline: " + e.getMessage(), e);
         } catch (Exception e){

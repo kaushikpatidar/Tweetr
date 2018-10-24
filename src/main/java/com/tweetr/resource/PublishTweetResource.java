@@ -37,10 +37,14 @@ public class PublishTweetResource {
     public Response publishTweet(@QueryParam("message") final String tweet) {
 
         try {
+            if(tweet == null || tweet.length() == 0){
+                return Response.ok(APIResponse.PUBLISH_NO_TWEET_MESSAGE_PROVIDED).build();
+            }
+
             log.info("Publishing the tweet:" + tweet);
             Status status = twitterService.postTweet(tweet);
             if(status != null){
-                return Response.ok( APIResponse.PUBLISH_MESSAGE_SUCCESS + status.getText()).build();
+                return Response.ok( APIResponse.PUBLISH_MESSAGE_SUCCESS + " " +status.getText()).build();
             }
 
         } catch (Exception e){

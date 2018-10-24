@@ -30,7 +30,6 @@ public class TweetrApp extends Application<TweetrAppConfiguration> {
     public void run(TweetrAppConfiguration configuration,
                     Environment environment) {
 
-
         AnnotationConfigWebApplicationContext parentContext = new AnnotationConfigWebApplicationContext();
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 
@@ -46,9 +45,7 @@ public class TweetrApp extends Application<TweetrAppConfiguration> {
         ctx.start();
 
         Map<String, Object> pathResources = ctx.getBeansWithAnnotation(Path.class);
-        for(Map.Entry entry : pathResources.entrySet()) {
-            environment.jersey().register(entry.getValue());
-        }
+        pathResources.forEach((key, value) -> environment.jersey().register(value));
 
         environment.servlets().addServletListeners(new SpringContextLoaderListener(ctx));
     }
