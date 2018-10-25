@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Path("/tweet")
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,17 +35,17 @@ public class PublishTweetResource {
 
     @POST
     @Timed
-    public Response publishTweet(@QueryParam("message") final String tweet) {
+    public Response publishTweet(@QueryParam("message") final Optional<String> tweet) {
 
         try {
-            if(tweet == null || tweet.length() == 0){
+            if(!tweet.isPresent() || tweet.get().length() == 0){
                 return Response.ok(APIResponse.PUBLISH_NO_TWEET_MESSAGE_PROVIDED).build();
             }
 
             log.info("Publishing the tweet:" + tweet);
-            Status status = twitterService.postTweet(tweet);
-            if(status != null){
-                return Response.ok( APIResponse.PUBLISH_MESSAGE_SUCCESS + " " +status.getText()).build();
+            Optional<Status> status = twitterService.postTweet(tweet);
+            if(status.isPresent()){
+                return Response.ok( APIResponse.PUBLISH_MESSAGE_SUCCESS + " " +status.get().getText()).build();
             }
 
         } catch (Exception e){
