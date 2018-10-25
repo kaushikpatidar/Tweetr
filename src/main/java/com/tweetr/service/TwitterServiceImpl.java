@@ -12,6 +12,7 @@ import twitter4j.TwitterException;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -24,13 +25,13 @@ public class TwitterServiceImpl implements TwitterService{
     private Logger log = LoggerFactory.getLogger(TwitterService.class);
 
     @Override
-    public Status postTweet(String tweet) {
-        Status status = null;
-        if(tweet == null){
+    public Optional<Status> postTweet(Optional<String> tweet) {
+        Optional<Status> status = Optional.empty();
+        if(!tweet.isPresent()){
             return status;
         }
         try{
-            status = twitterConfigurationBuilder.getTwitter().updateStatus(tweet);
+            status = Optional.ofNullable(twitterConfigurationBuilder.getTwitter().updateStatus(tweet.get()));
         } catch (TwitterException e) {
             log.error("Failed to publish the tweet: " + e.getMessage(), e);
         } catch (Exception e){
@@ -40,40 +41,40 @@ public class TwitterServiceImpl implements TwitterService{
     }
 
     @Override
-    public List<TwitterPost> getTimelineTwitterPost() {
+    public Optional<List<TwitterPost>> getTimelineTwitterPost() {
 
         try {
             log.info("Getting the timeline from twitter");
             log.debug("User screen name: " + twitterConfigurationBuilder.getTwitter().getScreenName());
 
-            List<Status> timelineStatusList = twitterConfigurationBuilder.getTwitter().getHomeTimeline();
+            Optional<List<Status>> timelineStatusList = Optional.ofNullable(twitterConfigurationBuilder.getTwitter().getHomeTimeline());
 
-            if(timelineStatusList == null){
-                return null;
+            if(!timelineStatusList.isPresent()){
+                return Optional.empty();
             }
 
-            List<TwitterPost> timelineTwitterPostList = new ArrayList<>();
+            Optional<List<TwitterPost>> timelineTwitterPostList = Optional.ofNullable(new ArrayList<>());
 
-            if(timelineStatusList.size()==0){
+            if(timelineStatusList.get().size() == 0){
                 log.info("Didn't retrieve any  posts from timeline");
                 return timelineTwitterPostList;
             }
 
-            timelineTwitterPostList = timelineStatusList.stream()
+            timelineTwitterPostList = Optional.ofNullable(timelineStatusList.get().stream()
                     .map(timelineTwitterPost -> new TwitterPost(timelineTwitterPost.getText(),
                             new TwitterUser(timelineTwitterPost.getUser().getProfileImageURL(),
                                     timelineTwitterPost.getUser().getScreenName(),
                                     timelineTwitterPost.getUser().getName()), timelineTwitterPost.getCreatedAt()))
-                    .collect(toList());
+                    .collect(toList()));
 
-            log.info("Successfully retrieved " + timelineTwitterPostList.size() + " posts from timeline");
+            log.info("Successfully retrieved " + timelineTwitterPostList.get().size() + " posts from timeline");
             return timelineTwitterPostList;
         } catch (TwitterException e) {
             log.error("Failed to obtain the user timeline: " + e.getMessage(), e);
         } catch (Exception e){
             log.error("Error: " + e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
 }

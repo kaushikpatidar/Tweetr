@@ -4,8 +4,9 @@ import com.tweetr.model.twitter.TwitterPost;
 import twitter4j.Status;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TwitterService {
-    Status postTweet(String tweet);
-    List<TwitterPost> getTimelineTwitterPost();
+    Optional<Status> postTweet(Optional<String> tweet);
+    Optional<List<TwitterPost>> getTimelineTwitterPost();
 }
