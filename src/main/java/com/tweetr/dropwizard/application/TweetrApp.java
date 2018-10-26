@@ -1,6 +1,6 @@
 package com.tweetr.dropwizard.application;
 
-import com.tweetr.dropwizard.configuration.TweetrAppConfiguration;
+import com.tweetr.dropwizard.application.configuration.TweetrAppConfiguration;
 import com.tweetr.spring.SpringContextLoaderListener;
 import com.tweetr.spring.configuration.TwitterAppSpringConfiguration;
 import io.dropwizard.Application;

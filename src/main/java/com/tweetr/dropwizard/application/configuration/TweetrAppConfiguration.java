@@ -1,4 +1,4 @@
-package com.tweetr.dropwizard.configuration;
+package com.tweetr.dropwizard.application.configuration;
 
 import io.dropwizard.Configuration;
 
