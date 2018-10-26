@@ -1,6 +1,7 @@
 package com.tweetr.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.tweetr.dropwizard.application.cache.CacheConfigManager;
 import com.tweetr.model.api.constants.APIResponse;
 import com.tweetr.model.twitter.TwitterPost;
 import com.tweetr.service.TwitterService;
@@ -25,11 +26,10 @@ public class ObtainTimelineResource {
     @Autowired
     private TwitterService twitterService;
 
-    private Logger log = LoggerFactory.getLogger(ObtainTimelineResource.class);
+    @Autowired
+    private CacheConfigManager cacheConfigManager;
 
-    public ObtainTimelineResource(TwitterService twitterService) {
-        this.twitterService = twitterService;
-    }
+    private Logger log = LoggerFactory.getLogger(ObtainTimelineResource.class);
 
     public ObtainTimelineResource() {
 
@@ -41,7 +41,9 @@ public class ObtainTimelineResource {
         try {
             log.info("Getting the timeline from twitter");
 
-            Optional<List<TwitterPost>> timelineTwitterPost = twitterService.getTimelineTwitterPost();
+            Optional<List<TwitterPost>> timelineTwitterPost =
+                    cacheConfigManager.getObtainTimelineResponseDataFromCache(APIResponse.OBTAIN_TIMELINE_RESPONSE_KEY);
+
             if(timelineTwitterPost.isPresent() && timelineTwitterPost.get().size() > 0){
                 log.info("Successfully retrieved " + timelineTwitterPost.get().size() + " posts from timeline");
                 return Response.ok(timelineTwitterPost).build();

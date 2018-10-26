@@ -1,7 +1,8 @@
-package com.tweetr.dropwizard.configuration;
+package com.tweetr.dropwizard.application.configuration;
 
 import com.tweetr.dropwizard.application.TweetrApp;
 import com.tweetr.model.accessparameters.TwitterAccessParameters;
+import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@Component
 public class TwitterConfigurationBuilder {
 
     public Twitter getTwitter(){

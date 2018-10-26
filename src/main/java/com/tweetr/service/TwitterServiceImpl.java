@@ -1,15 +1,15 @@
 package com.tweetr.service;
 
-import com.tweetr.dropwizard.configuration.TwitterConfigurationBuilder;
+import com.tweetr.dropwizard.application.configuration.TwitterConfigurationBuilder;
 import com.tweetr.model.twitter.TwitterPost;
 import com.tweetr.model.twitter.TwitterUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class TwitterServiceImpl implements TwitterService{
 
-    @Inject
+    @Autowired
     private TwitterConfigurationBuilder twitterConfigurationBuilder;
 
     private Logger log = LoggerFactory.getLogger(TwitterService.class);

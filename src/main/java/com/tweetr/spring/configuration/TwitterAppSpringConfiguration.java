@@ -1,6 +1,5 @@
 package com.tweetr.spring.configuration;
 
-import com.tweetr.dropwizard.configuration.TwitterConfigurationBuilder;
 import com.tweetr.resource.ObtainTimelineResource;
 import com.tweetr.resource.PublishTweetResource;
 import org.springframework.context.annotation.Bean;
@@ -8,13 +7,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"com.tweetr.resource", "com.tweetr.service", "com.tweetr.dropwizard.configuration", "com.tweetr.spring.configuration"})
+@ComponentScan(basePackages = {"com.tweetr"})
 public class TwitterAppSpringConfiguration {
 
-    @Bean
+    /*@Bean
     public static TwitterConfigurationBuilder getTwitterConfigurationBuilder(){
         return new TwitterConfigurationBuilder();
     }
+*/
+//    @Bean
+//    public static CacheConfigManager getCacheConfigManager(){
+//        return new CacheConfigManager();
+//    }
 
     @Bean
     public static PublishTweetResource getPublishTweetResource(){

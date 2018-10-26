@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class TwitterPost {
     private String message;
-    private  TwitterUser twitterUser;
+    private TwitterUser twitterUser;
     private Date createdAt;
 
     public TwitterPost(String message, TwitterUser twitterUser, Date createdAt) {

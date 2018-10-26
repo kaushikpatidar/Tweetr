@@ -22,12 +22,8 @@ public class PublishTweetResource {
 
     @Autowired
     private TwitterService twitterService;
-    private Logger log = LoggerFactory.getLogger(PublishTweetResource.class);
 
-    //@Inject
-    public PublishTweetResource(TwitterService twitterService) {
-        this.twitterService = twitterService;
-    }
+    private Logger log = LoggerFactory.getLogger(PublishTweetResource.class);
 
     public PublishTweetResource() {
 
