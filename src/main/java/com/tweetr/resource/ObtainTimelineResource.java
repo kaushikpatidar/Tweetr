@@ -68,7 +68,7 @@ public class ObtainTimelineResource {
                 return Response.ok(APIResponse.OBTAIN_TIMELINE_NO_FILTER_PROVIDED).build();
             }
 
-            Optional<List<TwitterPost>> timelineTwitterPost = twitterService.getTimelineTwitterPost();
+            Optional<List<TwitterPost>> timelineTwitterPost = cacheConfigManager.getObtainTimelineResponseDataFromCache(APIResponse.OBTAIN_TIMELINE_RESPONSE_KEY);
             if(timelineTwitterPost.isPresent() && timelineTwitterPost.get().size() > 0){
                 log.info("Successfully retrieved " + timelineTwitterPost.get().size() + " posts from service");
 
