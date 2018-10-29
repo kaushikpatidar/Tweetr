@@ -10,16 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"com.tweetr"})
 public class TwitterAppSpringConfiguration {
 
-    /*@Bean
-    public static TwitterConfigurationBuilder getTwitterConfigurationBuilder(){
-        return new TwitterConfigurationBuilder();
-    }
-*/
-//    @Bean
-//    public static CacheConfigManager getCacheConfigManager(){
-//        return new CacheConfigManager();
-//    }
-
     @Bean
     public static PublishTweetResource getPublishTweetResource(){
         return new PublishTweetResource();
