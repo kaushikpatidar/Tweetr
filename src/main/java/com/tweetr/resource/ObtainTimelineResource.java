@@ -83,7 +83,7 @@ public class ObtainTimelineResource {
 
                 log.info("After filtering, retrieved  " + timelineTwitterPost.get().size() + " posts from timeline");
                 return Response.ok(filteredTimelinePosts).build();
-            } else if(timelineTwitterPost.isPresent()){
+            } else if(!timelineTwitterPost.isPresent() || timelineTwitterPost.get().size() == 0){
                 log.info("There are no posts from timeline");
                 return Response.ok(timelineTwitterPost).build();
             }
