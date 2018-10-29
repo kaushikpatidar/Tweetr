@@ -20,15 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class CacheConfigManager {
     private Logger log = LoggerFactory.getLogger(CacheConfigManager.class);
 
-    //private static CacheConfigManager cacheConfigManager = new CacheConfigManager();
-
     @Autowired
     private TwitterService twitterService;
 
-    /*public static CacheConfigManager getInstance() {
-        return cacheConfigManager;
-    }
-*/
     private static LoadingCache<String, Optional<List<TwitterPost>>> responseCache;
 
     public CacheConfigManager() {

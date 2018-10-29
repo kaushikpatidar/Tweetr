@@ -47,9 +47,9 @@ public class ObtainTimelineResource {
             if(timelineTwitterPost.isPresent() && timelineTwitterPost.get().size() > 0){
                 log.info("Successfully retrieved " + timelineTwitterPost.get().size() + " posts from timeline");
                 return Response.ok(timelineTwitterPost).build();
-            } else if(timelineTwitterPost.isPresent()){
+            } else if(!timelineTwitterPost.isPresent() || timelineTwitterPost.get().size() == 0){
                 log.info("There are no posts from timeline");
-                return Response.ok(timelineTwitterPost).build();
+                return Response.ok(APIResponse.OBTAIN_TIMELINE_NO_TWEETS_FOUND).build();
             }
         } catch (Exception e){
             log.error("Error: " + e.getMessage(), e);
