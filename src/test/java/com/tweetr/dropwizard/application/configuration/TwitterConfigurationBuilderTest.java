@@ -28,6 +28,6 @@ public class TwitterConfigurationBuilderTest {
 
     @Test
     public void getTwitter() {
-        assertEquals(mockTwitterConfigurationBuilderMock.getTwitter(), mockTwitter);
+        assertEquals(mockTwitter, mockTwitterConfigurationBuilderMock.getTwitter());
     }
 }

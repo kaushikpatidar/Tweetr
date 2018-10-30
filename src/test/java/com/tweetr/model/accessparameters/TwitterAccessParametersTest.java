@@ -5,21 +5,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class TwitterAccessParametersTest {
 
-    private TwitterAccessParameters mockTwitterAccessParameters;
+    private TwitterAccessParameters twitterAccessParametersMock;
 
     @Before
     public void setUp() throws Exception {
-        mockTwitterAccessParameters = mock(TwitterAccessParameters.class);
+        twitterAccessParametersMock = mock(TwitterAccessParameters.class);
 
-        when(mockTwitterAccessParameters.getConsumerKey()).thenReturn("<TEST_CONSUMER_KEY>");
-        when(mockTwitterAccessParameters.getConsumerSecret()).thenReturn("<TEST_CONSUMER_SECRET>");
-        when(mockTwitterAccessParameters.getAccessToken()).thenReturn("<TEST_ACCESS_TOKEN>");
-        when(mockTwitterAccessParameters.getAccessTokenSecret()).thenReturn("<TEST_ACCESS_TOKEN_SECRET>");
+        when(twitterAccessParametersMock.getConsumerKey()).thenReturn("<TEST_CONSUMER_KEY>");
+        when(twitterAccessParametersMock.getConsumerSecret()).thenReturn("<TEST_CONSUMER_SECRET>");
+        when(twitterAccessParametersMock.getAccessToken()).thenReturn("<TEST_ACCESS_TOKEN>");
+        when(twitterAccessParametersMock.getAccessTokenSecret()).thenReturn("<TEST_ACCESS_TOKEN_SECRET>");
     }
 
     @After
@@ -28,45 +28,45 @@ public class TwitterAccessParametersTest {
 
     @Test
     public void getConsumerKey() {
-        assertEquals(mockTwitterAccessParameters.getConsumerKey(), "<TEST_CONSUMER_KEY>");
+        assertEquals(twitterAccessParametersMock.getConsumerKey(), "<TEST_CONSUMER_KEY>");
     }
 
     @Test
     public void setConsumerKey() {
-        mockTwitterAccessParameters.setConsumerKey("<TEST_CONSUMER_KEY>");
-        verify(mockTwitterAccessParameters, times(1)).setConsumerKey(anyString());
+        twitterAccessParametersMock.setConsumerKey("<TEST_CONSUMER_KEY>");
+        verify(twitterAccessParametersMock, times(1)).setConsumerKey(any());
     }
 
     @Test
     public void getConsumerSecret() {
-        assertEquals(mockTwitterAccessParameters.getConsumerSecret(), "<TEST_CONSUMER_SECRET>");
+        assertEquals("<TEST_CONSUMER_SECRET>", twitterAccessParametersMock.getConsumerSecret());
     }
 
     @Test
     public void setConsumerSecret() {
-        mockTwitterAccessParameters.setConsumerSecret("<TEST_CONSUMER_SECRET>");
-        verify(mockTwitterAccessParameters, times(1)).setConsumerSecret(anyString());
+        twitterAccessParametersMock.setConsumerSecret("<TEST_CONSUMER_SECRET>");
+        verify(twitterAccessParametersMock, times(1)).setConsumerSecret(any());
     }
 
     @Test
     public void getAccessToken() {
-        assertEquals(mockTwitterAccessParameters.getAccessToken(), "<TEST_ACCESS_TOKEN>");
+        assertEquals("<TEST_ACCESS_TOKEN>", twitterAccessParametersMock.getAccessToken());
     }
 
     @Test
     public void setAccessToken() {
-        mockTwitterAccessParameters.setAccessToken("<TEST_ACCESS_TOKEN>");
-        verify(mockTwitterAccessParameters, times(1)).setAccessToken(anyString());
+        twitterAccessParametersMock.setAccessToken("<TEST_ACCESS_TOKEN>");
+        verify(twitterAccessParametersMock, times(1)).setAccessToken(any());
     }
 
     @Test
     public void getAccessTokenSecret() {
-        assertEquals(mockTwitterAccessParameters.getAccessTokenSecret(), "<TEST_ACCESS_TOKEN_SECRET>");
+        assertEquals("<TEST_ACCESS_TOKEN_SECRET>", twitterAccessParametersMock.getAccessTokenSecret());
     }
 
     @Test
     public void setAccessTokenSecret() {
-        mockTwitterAccessParameters.setAccessTokenSecret("<TEST_ACCESS_TOKEN_SECRET>");
-        verify(mockTwitterAccessParameters, times(1)).setAccessTokenSecret(anyString());
+        twitterAccessParametersMock.setAccessTokenSecret("<TEST_ACCESS_TOKEN_SECRET>");
+        verify(twitterAccessParametersMock, times(1)).setAccessTokenSecret(any());
     }
 }
