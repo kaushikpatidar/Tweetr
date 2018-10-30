@@ -4,21 +4,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
 
 public class TwitterUserTest {
 
-    private TwitterUser mockTwitterUser;
+    private TwitterUser twitterUserMock;
 
     @Before
     public void setUp() throws Exception {
-        mockTwitterUser = mock(TwitterUser.class);
+        twitterUserMock = mock(TwitterUser.class);
 
-        when(mockTwitterUser.getName()).thenReturn("Test Username");
-        when(mockTwitterUser.getProfileImageUrl()).thenReturn("http://testprofile.jpg");
-        when(mockTwitterUser.getTwitterHandle()).thenReturn("Test Twitter Handle");
+        when(twitterUserMock.getProfileImageUrl()).thenReturn("http://testprofile.jpg");
+        when(twitterUserMock.getTwitterHandle()).thenReturn("Test Twitter Handle");
+        when(twitterUserMock.getName()).thenReturn("Test Username");
     }
 
     @After
@@ -27,34 +28,34 @@ public class TwitterUserTest {
 
     @Test
     public void getProfileImageUrl() {
-        assertEquals(mockTwitterUser.getProfileImageUrl(), "http://testprofile.jpg");
+        assertEquals("http://testprofile.jpg", twitterUserMock.getProfileImageUrl());
     }
 
     @Test
     public void setProfileImageUrl() {
-        mockTwitterUser.setProfileImageUrl("http://testprofile.jpg");
-        verify(mockTwitterUser, times(1)).setProfileImageUrl(anyString());
+        twitterUserMock.setProfileImageUrl("http://testprofile.jpg");
+        verify(twitterUserMock, times(1)).setProfileImageUrl(any());
     }
 
     @Test
     public void getTwitterHandle() {
-        assertEquals(mockTwitterUser.getTwitterHandle(), "Test Twitter Handle");
+        assertEquals("Test Twitter Handle", twitterUserMock.getTwitterHandle());
     }
 
     @Test
     public void setTwitterHandle() {
-        mockTwitterUser.setTwitterHandle("Test Twitter Handle");
-        verify(mockTwitterUser, times(1)).setTwitterHandle(anyString());
+        twitterUserMock.setTwitterHandle("Test Twitter Handle");
+        verify(twitterUserMock, times(1)).setTwitterHandle(any());
     }
 
     @Test
     public void getName() {
-        assertEquals(mockTwitterUser.getName(), "Test Username");
+        assertEquals("Test Username", twitterUserMock.getName());
     }
 
     @Test
     public void setName() {
-        mockTwitterUser.setTwitterHandle("Test Username");
-        verify(mockTwitterUser, times(1)).setTwitterHandle(anyString());
+        twitterUserMock.setTwitterHandle("Test Username");
+        verify(twitterUserMock, times(1)).setTwitterHandle(any());
     }
 }
