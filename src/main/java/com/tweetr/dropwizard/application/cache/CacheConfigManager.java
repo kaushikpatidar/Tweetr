@@ -42,20 +42,25 @@ public class CacheConfigManager {
                                 @Override
                                 public Optional<List<TwitterPost>> load(String resource) throws Exception {
                                     log.info("Fetching Response Data from Twitter due to Cache Miss");
-                                    return twitterService.getTimelineTwitterPost();
+                                    try {
+                                        return twitterService.getTimelineTwitterPost();
+                                    } catch (Exception e) {
+                                        throw new Exception("Unable to fetch response from the Cache", e);
+                                    }
                                 }
                             });
         }
     }
 
-    public Optional<List<TwitterPost>> getObtainTimelineResponseDataFromCache(String key) {
+    public Optional<List<TwitterPost>> getObtainTimelineResponseDataFromCache(String key) throws Exception {
         try {
             CacheStats cacheStats = responseCache.stats();
             log.info("CacheStats = {} ", cacheStats);
             return responseCache.get(key);
         } catch (ExecutionException e) {
-            log.error("Error Retrieving Elements from the Response Cache" + e.getMessage());
+            throw new Exception("Error Retrieving Elements from the Response Cache", e);
+        } catch (Exception e) {
+            throw new Exception("Error occured" + e.getMessage(), e);
         }
-        return Optional.empty();
     }
 }

@@ -46,7 +46,6 @@ public class PublishTweetResource {
 
         } catch (Exception e){
             log.error("Error occured while publishing the tweet: " + e.getMessage(), e);
-
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
