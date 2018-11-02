@@ -94,7 +94,7 @@ public class TwitterServiceImplTest {
                 "Test Twitter Handle",
                 "Test Username");
 
-        TwitterPost twitterPost = new TwitterPost("Test Twitter Post", twitterUser, new Date());
+        TwitterPost twitterPost = new TwitterPost("Test Twitter Post", twitterUser, new Date(), "1");
 
         List<TwitterPost> twitterPostList = new LinkedList<>();
         twitterPostList.add(twitterPost);

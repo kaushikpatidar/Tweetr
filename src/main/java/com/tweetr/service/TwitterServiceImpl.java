@@ -64,7 +64,8 @@ public class TwitterServiceImpl implements TwitterService{
                     .map(timelineTwitterPost -> new TwitterPost(timelineTwitterPost.getText(),
                             new TwitterUser(timelineTwitterPost.getUser().getProfileImageURL(),
                                     timelineTwitterPost.getUser().getScreenName(),
-                                    timelineTwitterPost.getUser().getName()), timelineTwitterPost.getCreatedAt()))
+                                    timelineTwitterPost.getUser().getName()), timelineTwitterPost.getCreatedAt(),
+                                    Long.toString(timelineTwitterPost.getId())))
                     .collect(toList()));
 
             log.info("Successfully retrieved " + timelineTwitterPostList.get().size() + " posts from timeline");
