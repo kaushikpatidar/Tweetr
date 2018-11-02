@@ -1,0 +1,73 @@
+#heading-title{
+    font: italic bold 20pt arial;
+}
+
+.load-message-div {
+    text-align: center;
+    color: #b3afaf;
+}
+
+.tweet-container {
+    margin: auto;
+    width: 60%;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.div-bold {
+    font-weight: bold;
+}
+
+.odd-twitter-element {
+    background-color: #e8f5fd;
+    margin:  2px;
+    //cursor: pointer;
+}
+
+.even-twitter-element {
+    background-color: #e9e9e9;
+    margin:  2px;
+    //cursor: pointer;
+}
+
+.twitter-post-element-div {
+    width: 80%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.twitter-profile-element-div {
+    width: 20%;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.twitter-profile-element-date-div {
+    font-style: italic;
+    font-size: x-small;
+    padding: 5px;
+}
+
+.div-clear {
+    margin: 20px;
+}
+
+.load-button {
+    margin: auto;
+    display: block;
+    background-color: #c1bcbc;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: medium;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.load-button-hover:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}

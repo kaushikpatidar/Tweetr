@@ -79,6 +79,11 @@
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-assets</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -178,16 +183,18 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>com/tweetr/model/**</exclude>
+                                <exclude>com/tweetr/spring/*</exclude>
+                                <exclude>com/tweetr/spring/**</exclude>
+                                <exclude>com/tweetr/dropwizard/application/*</exclude>
+                                <exclude>com/tweetr/dropwizard/application/configuration/*</exclude>
+                            </excludes>
                             <dataFile>target/jacoco.exec</dataFile>
                             <outputDirectory>${jacoco-output-directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <systemPropertyVariables>
-                        <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
-                    </systemPropertyVariables>
-                </configuration>
             </plugin>
 
         </plugins>

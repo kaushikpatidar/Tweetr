@@ -7,11 +7,13 @@ public class TwitterPost {
     private String message;
     private TwitterUser twitterUser;
     private Date createdAt;
+    private String twitterPostID;
 
-    public TwitterPost(String message, TwitterUser twitterUser, Date createdAt) {
+    public TwitterPost(String message, TwitterUser twitterUser, Date createdAt, String twitterPostID) {
         this.message = message;
         this.twitterUser = twitterUser;
         this.createdAt = createdAt;
+        this.twitterPostID = twitterPostID;
     }
 
     public String getMessage() {
@@ -38,19 +40,28 @@ public class TwitterPost {
         this.createdAt = createdAt;
     }
 
+    public String getTwitterPostID() {
+        return twitterPostID;
+    }
+
+    public void setTwitterPostID(String twitterPostID) {
+        this.twitterPostID = twitterPostID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TwitterPost that = (TwitterPost) o;
-        return Objects.equals(message, that.message) &&
+        return twitterPostID == that.twitterPostID &&
+                Objects.equals(message, that.message) &&
                 Objects.equals(twitterUser, that.twitterUser) &&
                 Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, twitterUser, createdAt);
+        return Objects.hash(message, twitterUser, createdAt, twitterPostID);
     }
 
     @Override
@@ -59,6 +70,7 @@ public class TwitterPost {
                 "message='" + message + '\'' +
                 ", twitterUser=" + twitterUser +
                 ", createdAt=" + createdAt +
+                ", twitterPostID=" + twitterPostID +
                 '}';
     }
 }

@@ -51,7 +51,8 @@ public class ObtainTimelineResourceTest {
         timelineTwitterPost.get().add(new TwitterPost(
                 "Test Message",
                 new TwitterUser("http://testprofile.jpg","Test Twitter Handle", "Test Username"),
-                new Date()));
+                new Date(),
+                "1"));
 
         when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(timelineTwitterPost);
 
@@ -79,7 +80,8 @@ public class ObtainTimelineResourceTest {
         timelineTwitterPost.add(new TwitterPost(
                 "Test Message",
                 new TwitterUser("http://testprofile.jpg","Test Twitter Handle", "Test Username"),
-                new Date()));
+                new Date(),
+                "1"));
 
         when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(Optional.ofNullable(timelineTwitterPost));
 
@@ -97,7 +99,8 @@ public class ObtainTimelineResourceTest {
         timelineTwitterPost.add(new TwitterPost(
                 "Test Message",
                 new TwitterUser("http://testprofile.jpg","Test Twitter Handle", "Test Username"),
-                new Date()));
+                new Date(),
+                "1"));
 
         when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(Optional.ofNullable(timelineTwitterPost));
 
