@@ -36,7 +36,7 @@ public class PublishTweetResourceTest {
     }
 
     @Test
-    public void publishTweet() {
+    public void publishTweet() throws Exception {
         Status statusMock = mock(Status.class);
         when(statusMock.getText()).thenReturn("Test Status Text");
 
@@ -70,7 +70,7 @@ public class PublishTweetResourceTest {
     }
 
     @Test
-    public void publishTweetWithExceptionFromTwitterService(){
+    public void publishTweetWithExceptionFromTwitterService() throws Exception{
         when(twitterServiceMock.postTweet(any())).thenReturn(Optional.empty());
 
         Response responseExpected = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

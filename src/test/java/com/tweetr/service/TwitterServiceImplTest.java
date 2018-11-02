@@ -56,7 +56,7 @@ public class TwitterServiceImplTest {
     }
 
     @Test
-    public void postTweetWithEmptyTweet() {
+    public void postTweetWithEmptyTweet() throws Exception{
         assertEquals(Optional.empty(),
                 twitterServiceMock.postTweet(Optional.empty()));
     }

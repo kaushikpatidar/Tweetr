@@ -46,7 +46,7 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
-    public void getHomeTimeline() {
+    public void getHomeTimeline() throws Exception {
         Optional<List<TwitterPost>> timelineTwitterPost = Optional.of(new ArrayList<>());
         timelineTwitterPost.get().add(new TwitterPost(
                 "Test Message",
@@ -65,7 +65,7 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
-    public void getHomeTimelineWithEmptyResponse() {
+    public void getHomeTimelineWithEmptyResponse() throws Exception {
         Optional<List<TwitterPost>> timelineTwitterPost = Optional.empty();
 
         when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(timelineTwitterPost);
@@ -75,7 +75,7 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
-    public void getFilteredHomeTimeline() {
+    public void getFilteredHomeTimeline() throws Exception {
         List<TwitterPost> timelineTwitterPost = (new ArrayList<>());
         timelineTwitterPost.add(new TwitterPost(
                 "Test Message",
@@ -94,7 +94,7 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
-    public void getFilteredHomeTimelineWithNoFilterMatchTweets() {
+    public void getFilteredHomeTimelineWithNoFilterMatchTweets() throws Exception {
         List<TwitterPost> timelineTwitterPost = (new ArrayList<>());
         timelineTwitterPost.add(new TwitterPost(
                 "Test Message",
@@ -133,7 +133,7 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
-    public void getFilteredHomeTimelineWithEmptyResponse() {
+    public void getFilteredHomeTimelineWithEmptyResponse() throws Exception {
         Optional<List<TwitterPost>> timelineTwitterPost = Optional.empty();
 
         when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(timelineTwitterPost);

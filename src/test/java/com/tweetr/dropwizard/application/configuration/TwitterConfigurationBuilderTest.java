@@ -27,7 +27,7 @@ public class TwitterConfigurationBuilderTest {
     }
 
     @Test
-    public void getTwitter() {
+    public void getTwitter() throws Exception{
         assertEquals(mockTwitter, mockTwitterConfigurationBuilderMock.getTwitter());
     }
 }

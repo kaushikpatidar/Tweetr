@@ -25,7 +25,7 @@ public class TwitterServiceImpl implements TwitterService{
     private Logger log = LoggerFactory.getLogger(TwitterService.class);
 
     @Override
-    public Optional<Status> postTweet(Optional<String> tweet) {
+    public Optional<Status> postTweet(Optional<String> tweet) throws Exception {
         Optional<Status> status = Optional.empty();
         if(!tweet.isPresent()){
             return status;
@@ -33,15 +33,15 @@ public class TwitterServiceImpl implements TwitterService{
         try{
             status = Optional.ofNullable(twitterConfigurationBuilder.getTwitter().updateStatus(tweet.get()));
         } catch (TwitterException e) {
-            log.error("Failed to publish the tweet: " + e.getMessage(), e);
+            throw new Exception("Unable to post the tweet", e);
         } catch (Exception e){
-            log.error("Error: " + e.getMessage(), e);
+            throw new Exception("Error: " + e.getMessage(), e);
         }
         return status;
     }
 
     @Override
-    public Optional<List<TwitterPost>> getTimelineTwitterPost() {
+    public Optional<List<TwitterPost>> getTimelineTwitterPost() throws Exception {
 
         try {
             log.info("Getting the timeline from twitter");
@@ -70,12 +70,11 @@ public class TwitterServiceImpl implements TwitterService{
 
             log.info("Successfully retrieved " + timelineTwitterPostList.get().size() + " posts from timeline");
             return timelineTwitterPostList;
-        } catch (TwitterException e) {
-            log.error("Failed to obtain the user timeline: " + e.getMessage(), e);
+        } catch (TwitterException te) {
+            throw new Exception("Failed to obtain the user timeline: " + te.getErrorMessage(), te);
         } catch (Exception e){
-            log.error("Error: " + e.getMessage(), e);
+           throw new Exception("Error: " + e.getMessage(), e);
         }
-        return Optional.empty();
     }
 
 }

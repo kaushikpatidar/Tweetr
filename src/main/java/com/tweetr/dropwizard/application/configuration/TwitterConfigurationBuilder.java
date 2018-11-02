@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 @Component
 public class TwitterConfigurationBuilder {
 
-    public Twitter getTwitter(){
+    public Twitter getTwitter() throws Exception {
         Yaml yaml = new Yaml();
 
         try( InputStream in = Files.newInputStream( Paths.get( TweetrApp.class.getResource("/config/access-config.yml").toURI()) ) ) {
@@ -30,10 +30,7 @@ public class TwitterConfigurationBuilder {
 
             return new TwitterFactory(configurationBuilder.build()).getInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Failed to create the Twitter Instance", e);
         }
-
-        return null;
     }
-
 }
