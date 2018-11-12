@@ -77,4 +77,13 @@ public class PublishTweetResourceTest {
         assertEquals(responseExpected.getStatus(),
                 publishTweetResourceMock.publishTweet(Optional.ofNullable("Test Status Text")).getStatus());
     }
+
+    @Test
+    public void publishTweetWithException() throws Exception{
+        when(twitterServiceMock.postTweet(any())).thenThrow(new Exception());
+
+        Response responseExpected = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        assertEquals(responseExpected.getStatus(),
+                publishTweetResourceMock.publishTweet(Optional.ofNullable("Test Status Text")).getStatus());
+    }
 }

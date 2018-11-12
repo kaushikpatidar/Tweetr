@@ -9,15 +9,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.User;
+import twitter4j.*;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,7 +23,7 @@ public class TwitterServiceImplTest {
     private TwitterConfigurationBuilder twitterConfigurationBuilderMock;
 
     @InjectMocks
-    TwitterService twitterServiceMock = new TwitterServiceImpl();
+    TwitterService twitterService = new TwitterServiceImpl();
 
     @Before
     public void setUp() throws Exception {
@@ -52,13 +46,38 @@ public class TwitterServiceImplTest {
         when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
 
         assertEquals(Optional.of(statusMock),
-                twitterServiceMock.postTweet(Optional.of("Test Status")));
+                twitterService.postTweet(Optional.of("Test Status")));
     }
 
     @Test
-    public void postTweetWithEmptyTweet() throws Exception{
+    public void postTweetWithEmptyTweet() throws Exception {
         assertEquals(Optional.empty(),
-                twitterServiceMock.postTweet(Optional.empty()));
+                twitterService.postTweet(Optional.empty()));
+    }
+
+    @Test (expected = Exception.class)
+    public void postTweetWithTwitterException() throws Exception {
+        Twitter twitterMock = mock(Twitter.class);
+
+        Status statusMock = mock(Status.class);
+        when(statusMock.getText()).thenReturn("Test Status");
+
+        when(twitterMock.updateStatus(anyString())).thenThrow(new TwitterException(new Exception()));
+
+        when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
+
+        twitterService.postTweet(Optional.of("Test Status"));
+    }
+
+    @Test (expected = Exception.class)
+    public void postTweetWithException() throws Exception {
+        Twitter twitterMock = mock(Twitter.class);
+
+        when(twitterMock.updateStatus(anyString())).thenThrow(new TwitterException(new Exception()));
+
+        when(twitterConfigurationBuilderMock.getTwitter()).thenThrow(new Exception());
+
+        twitterService.postTweet(Optional.of("Test Status"));
     }
 
     @Test
@@ -73,19 +92,24 @@ public class TwitterServiceImplTest {
         when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
 
         assertEquals(Optional.empty(),
-                twitterServiceMock.getTimelineTwitterPost());
+                twitterService.getTimelineTwitterPost());
     }
 
-    //@Test
+    @Test
     public void getTimelineTwitterPost() throws Exception {
+
+        Date testDate = new Date();
+
         User userMock = mock(User.class);
         when(userMock.getName()).thenReturn("Test Username");
         when(userMock.getProfileImageURL()).thenReturn("http://testprofile.jpg");
         when(userMock.getScreenName()).thenReturn("Test Twitter Handle");
 
         Status statusMock = mock(Status.class);
-        when(statusMock.getText()).thenReturn("Test Status");
+        when(statusMock.getText()).thenReturn("Test Twitter Post");
         when(statusMock.getUser()).thenReturn(userMock);
+        when(statusMock.getCreatedAt()).thenReturn(testDate);
+        when(statusMock.getId()).thenReturn(new Long(1));
 
         Twitter twitterMock = mock(Twitter.class);
         when(twitterMock.getScreenName()).thenReturn("Test Screen Name");
@@ -94,7 +118,7 @@ public class TwitterServiceImplTest {
                 "Test Twitter Handle",
                 "Test Username");
 
-        TwitterPost twitterPost = new TwitterPost("Test Twitter Post", twitterUser, new Date(), "1");
+        TwitterPost twitterPost = new TwitterPost("Test Twitter Post", twitterUser, testDate, "1");
 
         List<TwitterPost> twitterPostList = new LinkedList<>();
         twitterPostList.add(twitterPost);
@@ -102,14 +126,81 @@ public class TwitterServiceImplTest {
         List<Status> timelineStatusList = new LinkedList<>();
         timelineStatusList.add(statusMock);
 
-        ResponseList<Status> statusResponseList = mock(ResponseList.class);
+        ResponseList<Status> timelineTwitterPostListMock = new DummyResponseList<>();
+        timelineTwitterPostListMock.add(statusMock);
 
-
-        when(twitterMock.getHomeTimeline()).thenReturn(statusResponseList);
+        when(twitterMock.getHomeTimeline()).thenReturn(timelineTwitterPostListMock);
 
         when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
 
-        assertEquals(Optional.of(twitterPostList),
-                twitterServiceMock.getTimelineTwitterPost());
+        assertEquals(Optional.of(twitterPostList).toString(),
+                twitterService.getTimelineTwitterPost().toString());
+    }
+
+    @Test
+    public void getTimelineTwitterPostWithEmptyResult() throws Exception {
+
+        Twitter twitterMock = mock(Twitter.class);
+        when(twitterMock.getScreenName()).thenReturn("Test Screen Name");
+
+        ResponseList<Status> timelineTwitterPostListMock = new DummyResponseList<>();
+
+        when(twitterMock.getHomeTimeline()).thenReturn(timelineTwitterPostListMock);
+
+        when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
+
+        assertEquals(0 ,
+                twitterService.getTimelineTwitterPost().get().size());
+    }
+
+    @Test (expected = Exception.class)
+    public void getTimelineTwitterPostWithTwitterException() throws Exception {
+        Twitter twitterMock = mock(Twitter.class);
+
+        Status statusMock = mock(Status.class);
+        when(statusMock.getText()).thenReturn("Test Status");
+
+        when(twitterMock.getHomeTimeline()).thenThrow(new TwitterException(new Exception()));
+
+        when(twitterConfigurationBuilderMock.getTwitter()).thenReturn(twitterMock);
+
+        twitterService.getTimelineTwitterPost();
+    }
+
+    @Test (expected = Exception.class)
+    public void getTimelineTwitterPostWithException() throws Exception {
+        Twitter twitterMock = mock(Twitter.class);
+
+        when(twitterMock.getHomeTimeline()).thenThrow(new TwitterException(new Exception()));
+
+        when(twitterConfigurationBuilderMock.getTwitter()).thenThrow(new Exception());
+
+        twitterService.getTimelineTwitterPost();
+    }
+
+    public class DummyResponseList<T> extends ArrayList<T>
+            implements ResponseList<T>
+    {
+
+        @Override
+        public RateLimitStatus getRateLimitStatus ()
+        {
+            return TwitterServiceImplTest.getRateLimitStatus();
+        }
+
+        @Override
+        public int getAccessLevel ()
+        {
+            return 0;
+        }
+    }
+
+    public static RateLimitStatus getRateLimitStatus ()
+    {
+        RateLimitStatus mockRateLimitStatus = mock(RateLimitStatus.class);
+        when(mockRateLimitStatus.getLimit()).thenReturn(0);
+        when(mockRateLimitStatus.getRemaining()).thenReturn(0);
+        when(mockRateLimitStatus.getSecondsUntilReset()).thenReturn(0);
+        return mockRateLimitStatus;
     }
 }
