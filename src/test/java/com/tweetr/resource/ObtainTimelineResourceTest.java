@@ -75,6 +75,24 @@ public class ObtainTimelineResourceTest {
     }
 
     @Test
+    public void getHomeTimelineWithEmptyListResponse() throws Exception {
+        Optional<List<TwitterPost>> timelineTwitterPost = Optional.of(new ArrayList<>());
+
+        when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(timelineTwitterPost);
+
+        Response responseExpected = Response.ok(APIResponse.OBTAIN_TIMELINE_NO_TWEETS_FOUND).build();
+        assertEquals(responseExpected.getStatus(), obtainTimelineResourceMock.getHomeTimeline().getStatus());
+    }
+
+    @Test
+    public void getHomeTimelineWithException() throws Exception{
+        when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenThrow(new Exception());
+
+        Response responseExpected = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        assertEquals(responseExpected.getStatus(), obtainTimelineResourceMock.getHomeTimeline().getStatus());
+    }
+
+    @Test
     public void getFilteredHomeTimeline() throws Exception {
         List<TwitterPost> timelineTwitterPost = (new ArrayList<>());
         timelineTwitterPost.add(new TwitterPost(
@@ -112,7 +130,6 @@ public class ObtainTimelineResourceTest {
                 obtainTimelineResourceMock.getFilteredHomeTimeline(Optional.of("No Match Available")).getStatus());
     }
 
-
     @Test
     public void getFilteredHomeTimelineWithEmptyTweetFilter() {
         Response responseExpected = Response.ok(APIResponse.OBTAIN_TIMELINE_NO_FILTER_PROVIDED).build();
@@ -141,4 +158,23 @@ public class ObtainTimelineResourceTest {
         Response responseExpected = Response.ok(APIResponse.OBTAIN_TIMELINE_NO_TWEETS_FOUND).build();
         assertEquals(responseExpected.getStatus(), obtainTimelineResourceMock.getFilteredHomeTimeline(Optional.of("Test")).getStatus());
     }
+
+    @Test
+    public void getFilteredHomeTimelineWithEmptyListResponse() throws Exception {
+        Optional<List<TwitterPost>> timelineTwitterPost = Optional.of(new ArrayList<>());
+
+        when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenReturn(timelineTwitterPost);
+
+        Response responseExpected = Response.ok(APIResponse.OBTAIN_TIMELINE_NO_TWEETS_FOUND).build();
+        assertEquals(responseExpected.getStatus(), obtainTimelineResourceMock.getFilteredHomeTimeline(Optional.of("Test")).getStatus());
+    }
+
+    @Test
+    public void getFilteredHomeTimelineWithException() throws Exception{
+        when(cacheConfigManager.getObtainTimelineResponseDataFromCache(any())).thenThrow(new Exception());
+
+        Response responseExpected = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        assertEquals(responseExpected.getStatus(), obtainTimelineResourceMock.getFilteredHomeTimeline(Optional.of("Test")).getStatus());
+    }
+
 }
