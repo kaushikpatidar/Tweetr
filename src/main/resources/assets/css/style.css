@@ -66,6 +66,7 @@
     font-size: medium;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+    outline: none;
 }
 
 .load-button-hover:hover {
